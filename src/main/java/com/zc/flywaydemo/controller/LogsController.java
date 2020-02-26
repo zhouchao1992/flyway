@@ -13,7 +13,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/logs/")
-@Api(value = "日志接口",tags = "日志接口")
+@Api(value = "日志接口1",tags = "日志接口1")
 public class LogsController {
     @Resource
     LogsInfoService logsInfoService;
