@@ -1,0 +1,70 @@
+spring:
+  flyway:
+    # 是否启用flyway
+    enabled: true
+    ## 编码格式，默认UTF-8
+    encoding: UTF-8
+    ## 迁移sql脚本文件存放路径，默认db/migration
+    locations: classpath:/initsql
+    ## 迁移sql脚本文件名称的前缀，默认V
+    sqlMigrationPrefix: V
+    ## 迁移sql脚本文件名称的分隔符，默认2个下划线__
+    sqlMigrationSeparator: __
+    # 迁移sql脚本文件名称的后缀
+    sqlMigrationSuffixes: .sql
+    # 迁移时是否进行校验，默认true
+    validateOnMigrate: true
+    # 设置为true，当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
+    baselineOnMigrate: true
+    # postgres10没有引入这个不提示错误，postgres12没有引入会报错
+    #schemas: myschema, site_issue
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/flyway_test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  #连接池的配置信息
+  #初始化大小，最小，最大
+  druid:
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    #配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery:  SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+server:
+  port: 8077
+  tomcat:
+    uri-encoding: UTF-8
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zc.flywaydemo.pojo
+
+#showSql
+logging:
+  level:
+    com.zc.flywaydemo.dao : debug
+
+#配置分页插件pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

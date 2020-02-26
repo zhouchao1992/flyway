@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.flywaydemo.dao.LogsInfoDao">
+    <resultMap type="com.zc.flywaydemo.pojo.LogsInfo" id="logsInfoMap">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="logtype" property="logtype" jdbcType="VARCHAR" />
+        <result column="logurl" property="logurl" jdbcType="VARCHAR" />
+        <result column="logip" property="logip" jdbcType="VARCHAR" />
+        <result column="logdz" property="logdz" jdbcType="VARCHAR" />
+        <result column="ladduser" property="ladduser" jdbcType="VARCHAR" />
+        <result column="lfadduser" property="lfadduser" jdbcType="VARCHAR" />
+        <result column="laddtime" property="laddtime" jdbcType="DATE" /><!--此处也是个巨坑，数据类型一定要和数据库里一至并且大写，数据库为datetime时这儿要date类型-->
+        <result column="htmlname" property="htmlname" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--sql-->
+    <sql id="logsinfo" >
+        id,logtype,logurl,logip,logdz,ladduser,lfadduser,laddtime,htmlname
+    </sql>
+    <!--简单查询-->
+    <select id="getAlLogsInfo" parameterType="Map"  resultMap="logsInfoMap">
+        select <include refid="logsinfo" ></include> from logs1
+        <where>
+           <if test="params.id !='' and params.id != null "> id = #{id}</if>
+        </where>
+    </select>
+
+    <!--批量修改和新增   isAdd.equals(0)为新增  反正更新  params 为接口中@Param("params")注解-->
+    <update id="updateLogInfo" parameterType="Map" >
+        <if test="params.isAdd=='0'.toString()">
+            INSERT INTO logs1 ( id, logtype, logurl, logip, logdz, ladduser, lfadduser, laddtime, htmlname )VALUES
+            <foreach collection="params.logsinfo" item="item" separator=",">
+                (#{item.id,jdbcType=BIGINT},
+                #{item.logtype,jdbcType=VARCHAR},
+                #{item.logurl,jdbcType=VARCHAR},
+                #{item.logip,jdbcType=VARCHAR},
+                #{item.logdz,jdbcType=VARCHAR},
+                #{item.ladduser,jdbcType=VARCHAR},
+                #{item.lfadduser,jdbcType=VARCHAR},
+                #{item.laddtime,jdbcType=DATE},
+                #{item.htmlname,jdbcType=VARCHAR}
+                )
+            </foreach>
+        </if>
+        <if test="params.isAdd=='1'.toString()">
+            <foreach collection="params.logsinfo" item="bean" index="index" open="" close="" separator=";">
+                UPDATE logs1
+                <set>
+                    logtype=#{bean.logtype,jdbcType=VARCHAR},
+                    logurl=#{bean.logurl,jdbcType=VARCHAR},
+                    logip=#{bean.logip,jdbcType=VARCHAR},
+                    logdz=#{bean.logdz,jdbcType=VARCHAR},
+                    ladduser=#{bean.ladduser,jdbcType=VARCHAR},
+                    lfadduser=#{bean.lfadduser,jdbcType=VARCHAR},
+                    laddtime=#{bean.laddtime,jdbcType=DATE},
+                    htmlname=#{bean.htmlname,jdbcType=VARCHAR}
+                </set>
+                <where>
+                    id = #{bean.id}
+                </where>
+            </foreach>
+        </if>
+    </update>
+</mapper>
