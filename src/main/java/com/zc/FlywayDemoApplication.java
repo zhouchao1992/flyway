@@ -1,4 +1,4 @@
-package com.zc.flywaydemo;
+package com.zc;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableTransactionManagement
 public class FlywayDemoApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         SpringApplication.run(FlywayDemoApplication.class, args);
     }
 

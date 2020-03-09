@@ -2,6 +2,7 @@ package com.zc.flywaydemo.controller;
 
 import com.zc.flywaydemo.pojo.LogsInfo;
 import com.zc.flywaydemo.service.LogsInfoService;
+import com.zc.log.annotation.SystemControllerLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class LogsController {
 
     @GetMapping("logsInfo")
     @ApiOperation(value="获取日志信息", notes="获取日志信息", produces = "application/json")
+    @SystemControllerLog
     public List<LogsInfo> getLogsInof(String id,int currentPage,int pageSize){
         Map param = new HashMap();
         param.put("id",id);
@@ -31,6 +33,7 @@ public class LogsController {
 
     @GetMapping("updateLogsInfo")
     @ApiOperation(value="批量插入或者更新信息", notes="批量插入或者更新信息", produces = "application/json")
+    @SystemControllerLog
     public int updateLogsInfo(String isAdd){//isAdd是否为新增，反之为更新
         List<LogsInfo>  data = new ArrayList<>();
         Map param = new HashMap();
@@ -41,7 +44,7 @@ public class LogsController {
         return ints;
     }
 
-
+    @SystemControllerLog
     public  List<LogsInfo> getLogsInfo( List<LogsInfo>  data,String isAdd ){
        if ("0".equals(isAdd)){
            for (int i=0;i<1000;i++){

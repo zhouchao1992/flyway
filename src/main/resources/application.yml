@@ -1,3 +1,8 @@
+server:
+  port: 8077
+  tomcat:
+    uri-encoding: UTF-8
+
 spring:
   flyway:
     # 是否启用flyway
@@ -47,11 +52,6 @@ spring:
     filters: stat,wall,log4j
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-
-server:
-  port: 8077
-  tomcat:
-    uri-encoding: UTF-8
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

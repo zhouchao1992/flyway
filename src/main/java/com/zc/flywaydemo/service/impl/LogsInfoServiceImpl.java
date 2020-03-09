@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.zc.flywaydemo.dao.LogsInfoDao;
 import com.zc.flywaydemo.pojo.LogsInfo;
 import com.zc.flywaydemo.service.LogsInfoService;
+import com.zc.log.annotation.SystemServiceLog;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,9 @@ import java.util.Map;
 public class LogsInfoServiceImpl implements LogsInfoService {
     @Resource
     LogsInfoDao logsInfoDao;
+
     @Override
+    @SystemServiceLog
     public List<LogsInfo> getAlLogsInfo(Map<String,Object> param) {
         //分页插件的使用 第一个参数是当前页 第二个参数是每页显示的条数
         PageHelper.startPage(Integer.parseInt(String.valueOf(param.get("currentPage"))), Integer.parseInt(String.valueOf(param.get("pageSize"))));
@@ -29,6 +32,7 @@ public class LogsInfoServiceImpl implements LogsInfoService {
 
     @Transactional(rollbackFor = {Exception.class})
     @Override
+    @SystemServiceLog
     public int updateLogInfo(Map<String, Object> param) {
         int count = logsInfoDao.updateLogInfo(param);
         return count;
