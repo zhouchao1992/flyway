@@ -4,6 +4,7 @@ server:
     uri-encoding: UTF-8
 
 spring:
+  #数据库版本flyway控制配置信息
   flyway:
     # 是否启用flyway
     enabled: true
@@ -23,13 +24,17 @@ spring:
     baselineOnMigrate: true
     # postgres10没有引入这个不提示错误，postgres12没有引入会报错
     #schemas: myschema, site_issue
+    #数据库连接配置信息
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/flyway_test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
+  #solr 连接信息配置
+  data:
+    solr:
+      host: http://127.0.0.1:8983/solr
   #连接池的配置信息
   #初始化大小，最小，最大
   druid:

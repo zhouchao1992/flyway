@@ -21,8 +21,10 @@ public class LogsInfoServiceImpl implements LogsInfoService {
     @Override
     @SystemServiceLog
     public List<LogsInfo> getAlLogsInfo(Map<String,Object> param) {
-        //分页插件的使用 第一个参数是当前页 第二个参数是每页显示的条数
-        PageHelper.startPage(Integer.parseInt(String.valueOf(param.get("currentPage"))), Integer.parseInt(String.valueOf(param.get("pageSize"))));
+        if (param.get("currentPage")!=null && param.get("pageSize")!=null){
+            //分页插件的使用 第一个参数是当前页 第二个参数是每页显示的条数
+            PageHelper.startPage(Integer.parseInt(String.valueOf(param.get("currentPage"))), Integer.parseInt(String.valueOf(param.get("pageSize"))));
+        }
         Page<LogsInfo> page = (Page<LogsInfo>)logsInfoDao.getAlLogsInfo(param);
         System.out.println("第"+page.getPageNum()+"页");
         System.out.println("查询数据"+page.getEndRow()+"条");

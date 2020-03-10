@@ -5,6 +5,8 @@ import com.zc.flywaydemo.service.LogsInfoService;
 import com.zc.log.annotation.SystemControllerLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,9 @@ public class LogsController {
     @Resource
     LogsInfoService logsInfoService;
 
+    @Resource
+    private SolrTemplate solrTemplate;
+
     @GetMapping("logsInfo")
     @ApiOperation(value="获取日志信息", notes="获取日志信息", produces = "application/json")
     @SystemControllerLog
@@ -28,6 +33,10 @@ public class LogsController {
         param.put("currentPage",currentPage);
         param.put("pageSize",pageSize);
         List<LogsInfo> alLogsInfo = logsInfoService.getAlLogsInfo(param);
+        UpdateResponse my_core_one = solrTemplate.saveBeans("my_core_one", alLogsInfo);
+        int status = my_core_one.getStatus();
+        System.out.println(status);
+
         return alLogsInfo;
     }
 

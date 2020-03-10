@@ -19,5 +19,4 @@ public class LogsInfo {
     private String lfadduser;
     private Date laddtime;
     private String htmlname;
-    private UserInfo userInfo;
 }
