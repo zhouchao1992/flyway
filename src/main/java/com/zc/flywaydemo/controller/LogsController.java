@@ -57,24 +57,24 @@ public class LogsController {
     public  List<LogsInfo> getLogsInfo( List<LogsInfo>  data,String isAdd ){
        if ("0".equals(isAdd)){
            for (int i=0;i<1000;i++){
-               LogsInfo logsInfo = new LogsInfo();
+              /* LogsInfo logsInfo = new LogsInfo();
                logsInfo.setId( UUID.randomUUID().toString());
                logsInfo.setHtmlname("新建"+i);
                logsInfo.setLogip("127.0.0.1");
                logsInfo.setLaddtime(new Date());
                logsInfo.setLadduser("111");
                logsInfo.setLogurl("http://127.0.0.1:8077//swagger-ui.html#/%E6%97%A5%E5%BF%97%E6%8E%A5%E5%8F%A3/getLogsInofUsingGET");
-               data.add(logsInfo);
+               data.add(logsInfo);*/
            }
        }else {
-           LogsInfo logsInfo = new LogsInfo();
+          /* LogsInfo logsInfo = new LogsInfo();
            logsInfo.setId("1");
            logsInfo.setHtmlname("修改");
            logsInfo.setLogip("127.0.0.1");
            logsInfo.setLaddtime(new Date());
            logsInfo.setLadduser("111");
            logsInfo.setLogurl("http://127.0.0.1:8077//swagger-ui.html#/%E6%97%A5%E5%BF%97%E6%8E%A5%E5%8F%A3/getLogsInofUsingGET");
-           data.add(logsInfo);
+           data.add(logsInfo);*/
        }
         return data;
     }
